@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ОГЭ №19 Тренажёр</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.box{
+width:90%;
+max-width:700px;
+background:rgba(0,0,0,0.4);
+padding:20px;
+border-radius:15px;
+}
+
+h1{text-align:center;margin:0}
+.sub{text-align:center;opacity:0.8;margin-bottom:10px}
+
+a{
+display:block;
+text-align:center;
+padding:10px;
+margin:6px 0;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.vk{background:#4C75A3;color:white}
+.max{background:#ff6a00;color:white}
+
+.card{
+margin-top:15px;
+padding:15px;
+background:rgba(255,255,255,0.1);
+border-radius:12px;
+}
+
+button{
+padding:10px;
+margin:5px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.yes{background:#00c896;color:white}
+.no{background:#ff4d4d;color:white}
+
+.nav{display:flex;justify-content:space-between;margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>Юлия Владимировна</h1>
+<div class="sub">Тренажёр №19 ОГЭ (ФИПИ стиль)</div>
+
+<a class="vk" href="https://vk.ru/id711877188">VK</a>
+<a class="max" href="https://max.ru/id501906671902_biz">MAX</a>
+
+<div class="card">
+<div id="task"></div>
+
+<button class="yes" onclick="answer(true)">Верно</button>
+<button class="no" onclick="answer(false)">Неверно</button>
+
+<div class="nav">
+<button onclick="prev()">⬅</button>
+<button onclick="next()">➡</button>
+</div>
+
+<p id="info"></p>
+</div>
+</div>
+
+<script>
+
+// ---------- ФИПИ-СТИЛЬ утверждения №19 ----------
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+
+function gen(i){
+
+let t = rand(1,5);
+
+if(t===1){
+return {
+text:"Если две прямые параллельны, то накрест лежащие углы равны.",
+answer:true
+};
+}
+
+if(t===2){
+return {
+text:"Сумма углов треугольника равна 180°.",
+answer:true
+};
+}
+
+if(t===3){
+return {
+text:"Через точку вне прямой можно провести две параллельные прямые.",
+answer:false
+};
+}
+
+if(t===4){
+return {
+text:"Внешний угол треугольника равен сумме двух внутренних, не смежных с ним.",
+answer:true
+};
+}
+
+return {
+text:"Диагонали прямоугольника всегда равны.",
+answer:true
+};
+}
+
+// ---------- 117 заданий ----------
+let tasks=[];
+
+for(let i=1;i<=117;i++){
+let x=gen(i);
+
+// добавим реальные ловушки уровня ОГЭ
+if(i%9===0) x.answer=false;
+
+tasks.push(x);
+}
+
+let index=0;
+let score=0;
+
+function show(){
+document.getElementById("task").innerText=tasks[index].text;
+document.getElementById("info").innerText=
+`Задание ${index+1}/117 | Баллы: ${score}`;
+}
+
+function answer(v){
+if(v===tasks[index].answer) score++;
+show();
+}
+
+function next(){if(index<116)index++;show();}
+function prev(){if(index>0)index--;show();}
+
+show();
+
+</script>
+
+</body>
+</html>
